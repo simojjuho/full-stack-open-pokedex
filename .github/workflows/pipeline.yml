@@ -39,6 +39,7 @@ jobs:
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
+    environment: tag_release
     steps:
       - name: Github Tag Bump
         if: ${{ github.event_name == 'push' }}
