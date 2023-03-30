@@ -36,17 +36,16 @@ jobs:
         run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-  tag_release:
-    needs: [simple_deployment_pipeline]
-    runs-on: ubuntu-20.04
-    env:
-      GIT_DISCOVERY_ACROSS_FILESYSTEM: true
-    steps:
-      - name: Github Tag Bump
-        if: ${{ github.event_name == 'push' }}
-        uses: anothrNick/github-tag-action@1.61.0
+      - name: tag_release
+        runs-on: ubuntu-20.04
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          DEFAULT_BUMP: patch
+          GIT_DISCOVERY_ACROSS_FILESYSTEM: true
+        steps:
+          - name: Github Tag Bump
+            if: ${{ github.event_name == 'push' }}
+            uses: anothrNick/github-tag-action@1.61.0
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              WITH_V: true
+              DEFAULT_BUMP: patch
 
