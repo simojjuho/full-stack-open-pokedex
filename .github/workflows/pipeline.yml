@@ -39,7 +39,8 @@ jobs:
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
-    environment: tag_release
+    env:
+      GIT_DISCOVERY_ACROSS_FILESYSTEM: true
     steps:
       - name: Github Tag Bump
         if: ${{ github.event_name == 'push' }}
@@ -48,3 +49,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: patch
+
