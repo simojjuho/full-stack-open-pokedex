@@ -36,8 +36,7 @@ jobs:
       - name: Fly Deploy
         if: ${{ github.event_name == 'push'  &&  !contains(toJson(github.event.commits.*.message), '#skip') }}
         run: flyctl deploy --remote-only
-        env:
-          
+        
       - name: Discord Webhook Notify info
         uses: rjstone/discord-webhook-notify@v1.0.4
         if: ${{ success() && github.event_name == 'push' }}
