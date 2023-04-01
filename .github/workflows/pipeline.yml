@@ -46,7 +46,7 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Discord Webhook Notify error
         uses: rjstone/discord-webhook-notify@v1.0.4
-        if: ${{ failure() & github.event_name == 'push' }}
+        if: ${{ failure() && github.event_name == 'push' }}
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
