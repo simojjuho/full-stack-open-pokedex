@@ -41,16 +41,15 @@ jobs:
       - name: Discord Webhook Notify info
         uses: rjstone/discord-webhook-notify@v1.0.4
         if: ${{ success() }}
-        
         with:
           severity: info
           description: Deploy succesful!
+          details: https://hyfsp11-pokedex-simoj.fly.dev/
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Discord Webhook Notify error
         uses: rjstone/discord-webhook-notify@v1.0.4
         if: ${{ failure() }}
         with:
-          description: Deploy failed! 
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     needs: [simple_deployment_pipeline]
