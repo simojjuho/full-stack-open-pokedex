@@ -36,11 +36,9 @@ jobs:
       - name: Fly Deploy
         if: ${{ github.event_name == 'push'  &&  !contains(toJson(github.event.commits.*.message), '#skip') }}
         run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - name: Discord Webhook Notify info
         uses: rjstone/discord-webhook-notify@v1.0.4
-        if: ${{ success() }}
+        if: ${{ success() && github.event_name == 'push' }}
         with:
           severity: info
           description: Deploy succesful!
@@ -48,7 +46,7 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Discord Webhook Notify error
         uses: rjstone/discord-webhook-notify@v1.0.4
-        if: ${{ failure() }}
+        if: ${{ failure() && github.event_name == 'push' }}
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
